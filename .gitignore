@@ -1,3 +1,6 @@
+*.txt
+docs/
+
 # Prerequisites
 *.d
 
