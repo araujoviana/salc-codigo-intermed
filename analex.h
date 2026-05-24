@@ -2,7 +2,7 @@
  * Matheus Gabriel Viana Araujo - 10420444
  * Luis Fernando de Mesquita Pereira - 10410686
  *
- * analex.h — Analisador Léxico da linguagem SAL
+ * analex.h - Analisador Léxico da linguagem SAL
  * Interface fornecida: TInfoAtomo obter_atomo()
  *
  * Implementado como header-only (funções static) para que apenas

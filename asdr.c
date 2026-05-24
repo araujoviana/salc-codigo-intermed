@@ -2,7 +2,7 @@
  * Matheus Gabriel Viana Araujo - 10420444
  * Luis Fernando de Mesquita Pereira - 10410686
  *
- * asdr.c — Analisador Sintático com Descida Recursiva + Geração MEPA
+ * asdr.c - Analisador Sintático com Descida Recursiva + Geração MEPA
  *
  * Estratégia: Tradução Dirigida à Sintaxe (SDT).
  * As instruções MEPA são emitidas no momento em que as construções
@@ -396,7 +396,7 @@ static void parse_subrotina(bool e_funcao) {
      */
     int escopo_sub = prox_escopo_sub++;
     ts_set_escopo(escopo_sub);
-    r->extra = escopo_sub; /* escopo dos parâmetros — usado por ts_param */
+    r->extra = escopo_sub; /* escopo dos parâmetros - usado por ts_param */
 
     em_funcao    = e_funcao;
     fn_tem_ret   = false;
@@ -414,7 +414,7 @@ static void parse_subrotina(bool e_funcao) {
     /*
      * r->extra mantém o escopo (para ts_param achar os parâmetros).
      * A contagem de parâmetros é obtida via ts_param iterativo nos pontos
-     * de chamada — evitando sobrescrever extra com param_count.
+     * de chamada - evitando sobrescrever extra com param_count.
      */
 
     if (aceita(sLOCALS)) {
@@ -1120,7 +1120,7 @@ static void parse_bloco(void) {
  * Varre o restante do arquivo-fonte (sem consumir tokens) em busca da
  * palavra reservada "match". Usa fseek para restaurar a posição exata do
  * lexer: fseek cancela qualquer ungetc pendente e reposiciona no mesmo
- * offset — correto porque o char de ungetc existe fisicamente naquele
+ * offset - correto porque o char de ungetc existe fisicamente naquele
  * offset do arquivo.
  *
  * Retorna true se "match" aparecer fora de comentários; false caso contrário.
@@ -1244,7 +1244,7 @@ int parse_ini(void) {
     }
     int n_globais = prox_addr;
 
-    /* Sub-rotinas (proc/fn antes da main) — apenas análise semântica */
+    /* Sub-rotinas (proc/fn antes da main) - apenas análise semântica */
     while (tk.simb == sFN ||
            (tk.simb == sPROC && prox_tk.simb != sMAIN)) {
         parse_subrotina(tk.simb == sFN);

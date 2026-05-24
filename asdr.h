@@ -2,7 +2,7 @@
  * Matheus Gabriel Viana Araujo - 10420444
  * Luis Fernando de Mesquita Pereira - 10410686
  *
- * asdr.h — Analisador Sintático com Descida Recursiva (ASDR)
+ * asdr.h - Analisador Sintático com Descida Recursiva (ASDR)
  *
  * Implementa análise sintática, semântica e geração de código MEPA
  * para a linguagem SAL (Tradução Dirigida à Sintaxe).

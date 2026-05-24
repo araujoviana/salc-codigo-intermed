@@ -2,7 +2,7 @@
  * Matheus Gabriel Viana Araujo - 10420444
  * Luis Fernando de Mesquita Pereira - 10410686
  *
- * tabsimb.c — Implementação da Tabela de Símbolos
+ * tabsimb.c - Implementação da Tabela de Símbolos
  */
 
 #include "tabsimb.h"

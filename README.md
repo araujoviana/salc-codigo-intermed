@@ -1,11 +1,11 @@
-# SALc — Geração de Código Intermediário (Projeto 2)
+# SALc - Geração de Código Intermediário
 
-**Matheus Gabriel Viana Araujo — 10420444**  
-**Luis Fernando de Mesquita Pereira — 10410686**
+Matheus Gabriel Viana Araujo - 10420444
+Luis Fernando de Mesquita Pereira - 10410686
 
-Compilador da linguagem SAL (*Simple Academic Language*) que realiza análise léxica,
+Compilador da linguagem SAL que realiza análise léxica,
 sintática e semântica completas e gera código intermediário em MEPA
-(*Máquina de Execução de Pascal*) usando Tradução Dirigida à Sintaxe (SDT).
+usando Tradução Dirigida à Sintaxe (SDT).
 
 ---
 
@@ -16,7 +16,7 @@ make          # compila o binário ./salc
 make clean    # remove binário, objetos e arquivos de saída
 ```
 
-Requer `gcc` com suporte a C99.
+Requer `gcc` atualizado.
 
 ---
 
@@ -33,8 +33,8 @@ salc <arquivo.sal> [--tokens] [--symtab] [--trace]
 | `--symtab` | Gera `<base>.ts` com a tabela de símbolos após a compilação |
 | `--trace`  | Gera `<base>.trc` com cada instrução MEPA emitida |
 
-Em caso de **sucesso**, cria `<base>.mepa` com o código MEPA executável.  
-Em caso de **erro**, imprime a mensagem no `stderr` e remove o `.mepa` incompleto.
+Em caso de sucesso, cria `<base>.mepa` com o código MEPA executável.  
+Em caso de erro, imprime a mensagem no `stderr` e remove o `.mepa` incompleto.
 
 ### Exemplos
 
@@ -48,42 +48,6 @@ Em caso de **erro**, imprime a mensagem no `stderr` e remove o `.mepa` incomplet
 # Todos os logs
 ./salc tests/seq_while.sal --tokens --symtab --trace
 ```
-
----
-
-## Testes
-
-```bash
-make test          # roda 11 testes de sucesso (deve mostrar 11/11 OK)
-make test-erros    # roda 5 testes de rejeição semântica (deve mostrar 5/5 OK)
-make test-verbose  # exibe o MEPA gerado por cada teste de sucesso
-```
-
-### Testes de sucesso (`tests/`)
-
-| Arquivo | Construções cobertas |
-|---------|----------------------|
-| `fibonacci.sal` | `for`, `locals`, múltiplas variáveis por linha |
-| `seq_while.sal` | `loop while` |
-| `if_else.sal` | `if`/`else` |
-| `loop_until.sal` | `loop until` |
-| `match_test.sal` | `match`/`when` com valores e listas |
-| `aritmetica.sal` | `+`, `-`, `*`, `/`, menos unário |
-| `logica.sal` | `~` (NOT), `^` (AND), `v` (OR) |
-| `relacionais.sal` | `=`, `<>`, `<`, `<=`, `>`, `>=` |
-| `for_passo.sal` | `for step +1` e `for step -1` |
-| `match_range.sal` | `match`/`when` com intervalos (`..`) |
-| `subrotinas.sal` | Análise semântica de `fn` e `proc` |
-
-### Testes de rejeição (`tests/erros/`)
-
-| Arquivo | Erro esperado |
-|---------|---------------|
-| `var_nao_declarada.sal` | Uso de variável não declarada |
-| `duplicata.sal` | Identificador duplicado no mesmo escopo |
-| `ret_fora_funcao.sal` | `ret` dentro de `proc` (não `fn`) |
-| `args_errados.sal` | Chamada com número errado de argumentos |
-| `tipo_incompativel.sal` | Atribuição de tipo incompatível (`bool` → `int`) |
 
 ---
 
@@ -120,12 +84,9 @@ Instruções MEPA geradas por construção da linguagem:
 | `for` (step ±1) | `CMMEG`/`CMMAG` + `SOMA`/`SUBT` + 4 rótulos |
 | `match`/`when` | `ARMZ`/`CRVL` no temporário + cadeia de desvios |
 
-> **Simplificação (conforme especificação):** sub-rotinas (`proc`/`fn` ≠ `main`) e
-> vetores passam pela verificação semântica completa mas **não geram instruções MEPA**.
-
 ---
 
-## Estrutura dos Módulos
+## Estrutura de Arquivos
 
 ```
 main.c        Ponto de entrada; parsing de flags CLI; abertura de arquivos

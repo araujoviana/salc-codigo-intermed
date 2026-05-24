@@ -2,7 +2,7 @@
  * Matheus Gabriel Viana Araujo - 10420444
  * Luis Fernando de Mesquita Pereira - 10410686
  *
- * tabsimb.h — Tabela de Símbolos para o compilador SALc
+ * tabsimb.h - Tabela de Símbolos para o compilador SALc
  *
  * Registra identificadores com categoria, tipo e endereço MEPA
  * (nível de aninhamento + deslocamento).

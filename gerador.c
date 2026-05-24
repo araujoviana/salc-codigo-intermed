@@ -2,7 +2,7 @@
  * Matheus Gabriel Viana Araujo - 10420444
  * Luis Fernando de Mesquita Pereira - 10410686
  *
- * gerador.c — Implementação do Gerador de Código MEPA
+ * gerador.c - Implementação do Gerador de Código MEPA
  */
 
 #include "gerador.h"

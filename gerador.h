@@ -2,7 +2,7 @@
  * Matheus Gabriel Viana Araujo - 10420444
  * Luis Fernando de Mesquita Pereira - 10410686
  *
- * gerador.h — Gerador de código MEPA
+ * gerador.h - Gerador de código MEPA
  *
  * Fornece emissão formatada de instruções e gerenciamento de rótulos.
  * Formato dos dois endereços: sem espaço entre parâmetros (ex: CRVL 0,0).
@@ -27,10 +27,10 @@ void gerador_set_trace(FILE *trace);
 /**
  * Emite uma instrução MEPA formatada.
  *
- *  rotulo   — rótulo (ex: "L1"), ou NULL para sem rótulo
- *  mnem     — mnemônico (ex: "CRVL", "ARMZ", "SOMA")
- *  param1   — primeiro parâmetro, ou NULL
- *  param2   — segundo parâmetro (se não NULL, unido a param1 por ',')
+ *  rotulo   - rótulo (ex: "L1"), ou NULL para sem rótulo
+ *  mnem     - mnemônico (ex: "CRVL", "ARMZ", "SOMA")
+ *  param1   - primeiro parâmetro, ou NULL
+ *  param2   - segundo parâmetro (se não NULL, unido a param1 por ',')
  *
  * Formato gerado:
  *   Com rótulo:   "L1:  MNEM p1,p2\n"
@@ -41,7 +41,7 @@ void gera_instr_mepa(char *rotulo, char *mnem,
 
 /**
  * Retorna um novo rótulo único ("L1", "L2", ...).
- * O buffer interno é sobrescrito a cada chamada — copie se precisar
+ * O buffer interno é sobrescrito a cada chamada - copie se precisar
  * manter o valor após outra chamada a novo_rotulo().
  */
 char *novo_rotulo(void);

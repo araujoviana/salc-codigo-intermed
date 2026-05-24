@@ -2,21 +2,21 @@
  * Matheus Gabriel Viana Araujo - 10420444
  * Luis Fernando de Mesquita Pereira - 10410686
  *
- * main.c — Ponto de entrada do compilador SALc (Projeto 2)
+ * main.c - Ponto de entrada do compilador SALc (Projeto 2)
  *
  * Uso:   salc <arquivo.sal> [--tokens] [--symtab] [--trace]
  *
  * Saídas geradas:
- *   <base>.mepa   — código MEPA (sempre)
- *   <base>.tk     — lista de tokens léxicos  (requer --tokens)
- *   <base>.ts     — tabela de símbolos       (requer --symtab)
- *   <base>.trc    — rastreamento de instruções MEPA (requer --trace)
+ *   <base>.mepa   - código MEPA (sempre)
+ *   <base>.tk     - lista de tokens léxicos  (requer --tokens)
+ *   <base>.ts     - tabela de símbolos       (requer --symtab)
+ *   <base>.trc    - rastreamento de instruções MEPA (requer --trace)
  *
  * Fluxo:
  *   1. Analisa argumentos e derivar nomes de arquivos de saída.
  *   2. Abre arquivos necessários.
  *   3. Configura gerador e analisador com os arquivos auxiliares.
- *   4. Invoca parse_ini() — análise + geração de código (SDT).
+ *   4. Invoca parse_ini() - análise + geração de código (SDT).
  *   5. Fecha arquivos; em caso de erro remove saídas incompletas.
  */
 
@@ -145,7 +145,7 @@ int main(int argc, char *argv[]) {
             fclose(arq_mepa); fclose(fonte_sal);
             return EXIT_FAILURE;
         }
-        fprintf(arq_trc, "@ Rastreamento de instruções MEPA — %s\n\n",
+        fprintf(arq_trc, "@ Rastreamento de instruções MEPA - %s\n\n",
                 nome_entrada);
     }
 
@@ -171,7 +171,7 @@ int main(int argc, char *argv[]) {
         /* Remove saídas incompletas para não confundir execuções futuras */
         remove(nome_mepa);
         if (flag_symtab) remove(nome_ts);
-        /* Mantém .tk e .trc mesmo em erro — úteis para depuração */
+        /* Mantém .tk e .trc mesmo em erro - úteis para depuração */
         return EXIT_FAILURE;
     }
 
