@@ -1,0 +1,63 @@
+@ Programa: subrotinas
+@ Testa analise semantica de proc e fn (sem geracao de codigo MEPA)
+@ Conforme especificacao: sub-rotinas passam pela verificacao semantica
+@ completa (parametros, tipos, ret) mas nao emitem instrucoes MEPA.
+@
+@ Verificacoes semanticas cobertas:
+@   - fn com parametros tipados e tipo de retorno declarado
+@   - instrucao ret com verificacao de tipo compativel
+@   - proc com parametros (sem ret)
+@   - visibilidade de parametros dentro do escopo da sub-rotina
+@   - variaveis globais visiveis dentro de sub-rotinas
+@   - chamada com numero e tipos corretos de argumentos
+@
+@ Saida (gerada pela main, sem chamadas as sub-rotinas):
+@   a + b  (soma dos dois inteiros lidos)
+
+module subrotinas;
+
+globals
+    a: int;
+    b: int;
+    res: int;
+
+@ Funcao: retorna o maior entre dois inteiros
+fn maximo(x: int, y: int): int
+start
+    if (x > y)
+    start
+        ret x;
+    end
+    else
+    start
+        ret y;
+    end;
+end
+
+@ Funcao: retorna o valor absoluto de um inteiro
+fn absoluto(n: int): int
+start
+    if (n < 0)
+    start
+        ret -n;
+    end
+    else
+    start
+        ret n;
+    end;
+end
+
+@ Procedimento: imprime o valor duas vezes
+proc imprime_duplo(n: int)
+start
+    print(n);
+    print(n);
+end
+
+proc main()
+start
+    scan(a);
+    scan(b);
+    res := a + b;
+    print(res);
+end

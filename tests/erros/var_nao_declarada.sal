@@ -1,0 +1,10 @@
+@ Teste de erro: variavel usada sem declaracao
+@ Esperado: Erro semantico — variavel ou parametro declarado
+@ Saida:    programa rejeita, exit != 0
+
+module erro_var_nao_declarada;
+
+proc main()
+start
+    x := 5;
+end

@@ -1,0 +1,89 @@
+@ Programa: relacionais
+@ Testa todos os operadores relacionais: =, <>, <, <=, >, >=
+@ Instrucoes MEPA exercidas: CMIG, CMDIF, CMME, CMMEG, CMMA, CMMAG
+@
+@ Entrada: dois inteiros a e b
+@ Para cada operador: imprime 1 se a relacao for verdadeira, 0 caso contrario
+@
+@ Exemplo com a=5, b=5:
+@   a=b  → 1   a<>b → 0   a<b → 0
+@   a<=b → 1   a>b  → 0   a>=b → 1
+
+module relacionais;
+
+globals
+    a: int;
+    b: int;
+    r: int;
+
+proc main()
+start
+    scan(a);
+    scan(b);
+
+    @ Igualdade: = → CMIG
+    if (a = b)
+    start
+        r := 1;
+    end
+    else
+    start
+        r := 0;
+    end;
+    print(r);
+
+    @ Diferenca: <> → CMDIF
+    if (a <> b)
+    start
+        r := 1;
+    end
+    else
+    start
+        r := 0;
+    end;
+    print(r);
+
+    @ Menor estrito: < → CMME
+    if (a < b)
+    start
+        r := 1;
+    end
+    else
+    start
+        r := 0;
+    end;
+    print(r);
+
+    @ Menor ou igual: <= → CMMEG
+    if (a <= b)
+    start
+        r := 1;
+    end
+    else
+    start
+        r := 0;
+    end;
+    print(r);
+
+    @ Maior estrito: > → CMMA
+    if (a > b)
+    start
+        r := 1;
+    end
+    else
+    start
+        r := 0;
+    end;
+    print(r);
+
+    @ Maior ou igual: >= → CMMAG
+    if (a >= b)
+    start
+        r := 1;
+    end
+    else
+    start
+        r := 0;
+    end;
+    print(r);
+end

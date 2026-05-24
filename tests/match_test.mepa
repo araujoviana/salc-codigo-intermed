@@ -1,0 +1,60 @@
+     INPP
+     AMEM 5
+     LEIT
+     ARMZ 0,1
+     LEIT
+     ARMZ 0,2
+     LEIT
+     ARMZ 0,0
+     CRVL 0,0
+     ARMZ 0,4
+     CRVL 0,4
+     CRCT 1
+     CMIG
+     DSVF L4
+     DSVS L2
+L4:  NADA
+     DSVS L3
+L2:  NADA
+     CRVL 0,1
+     CRVL 0,2
+     SOMA
+     ARMZ 0,3
+     DSVS L1
+L3:  NADA
+     CRVL 0,4
+     CRCT 2
+     CMIG
+     DSVF L7
+     DSVS L5
+L7:  NADA
+     DSVS L6
+L5:  NADA
+     CRVL 0,1
+     CRVL 0,2
+     SUBT
+     ARMZ 0,3
+     DSVS L1
+L6:  NADA
+     CRVL 0,4
+     CRCT 3
+     CMIG
+     DSVF L10
+     DSVS L8
+L10: NADA
+     DSVS L9
+L8:  NADA
+     CRVL 0,1
+     CRVL 0,2
+     MULT
+     ARMZ 0,3
+     DSVS L1
+L9:  NADA
+     CRCT 0
+     ARMZ 0,3
+L1:  NADA
+     CRVL 0,3
+     IMPR
+     DMEM 5
+     PARA
+     FIM

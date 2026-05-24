@@ -1,0 +1,30 @@
+@ Programa: match_range
+@ Testa match/when com intervalos (val1..val2) e multiplos valores por when
+@ Instrucoes MEPA exercidas: CMMAG + CMMEG (verificacao de intervalo em gera_witem)
+@
+@ Classifica um numero de 1 a 10 em faixas:
+@   1..3  → classe 1
+@   4..6  → classe 2
+@   7..9  → classe 3
+@   outro → classe 0
+@
+@ Entrada: um inteiro n
+@ Saida:   classe correspondente (0, 1, 2 ou 3)
+
+module match_range;
+
+globals
+    n: int;
+    classe: int;
+
+proc main()
+start
+    scan(n);
+    match (n)
+        when 1..3 => classe := 1;
+        when 4..6 => classe := 2;
+        when 7..9 => classe := 3;
+        otherwise => classe := 0;
+    end;
+    print(classe);
+end

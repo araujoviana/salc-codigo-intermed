@@ -1,0 +1,15 @@
+@ Teste de erro: chamada de procedimento com numero errado de argumentos
+@ Esperado: Erro semantico — quantidade correta de parametros
+@ Saida:    programa rejeita, exit != 0
+
+module erro_args_errados;
+
+proc imprime(n: int)
+start
+    print(n);
+end
+
+proc main()
+start
+    imprime(1, 2);
+end

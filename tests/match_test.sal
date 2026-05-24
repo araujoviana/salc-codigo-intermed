@@ -1,0 +1,24 @@
+@ Programa: match_test
+@ Testa match/when/otherwise
+
+module match_test;
+
+globals
+    op: int;
+    a: int;
+    b: int;
+    res: int;
+
+proc main()
+start
+    scan(a);
+    scan(b);
+    scan(op);
+    match (op)
+        when 1 => res := a + b;
+        when 2 => res := a - b;
+        when 3 => res := a * b;
+        otherwise => res := 0;
+    end;
+    print(res);
+end

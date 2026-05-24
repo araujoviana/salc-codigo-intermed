@@ -1,0 +1,28 @@
+@ Programa: fibonacci
+@ Le n e imprime os primeiros n+1 termos da sequencia de Fibonacci
+
+module fibonacci;
+
+globals
+    n: int;
+    a: int;
+    b: int;
+    temp: int;
+
+proc main()
+locals
+    i: int;
+start
+    scan(n);
+    a := 0;
+    b := 1;
+    print(a);
+    print(b);
+    for i := 2 to n step 1 do
+    start
+        temp := a + b;
+        a := b;
+        b := temp;
+        print(b);
+    end;
+end

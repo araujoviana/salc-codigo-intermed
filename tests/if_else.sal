@@ -1,0 +1,24 @@
+@ Programa: if_else
+@ Testa if/else e operadores relacionais
+
+module if_else;
+
+globals
+    x: int;
+    y: int;
+    max: int;
+
+proc main()
+start
+    scan(x);
+    scan(y);
+    if (x > y)
+    start
+        max := x;
+    end
+    else
+    start
+        max := y;
+    end;
+    print(max);
+end

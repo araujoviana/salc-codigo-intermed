@@ -1,0 +1,19 @@
+@ Programa: loop_until
+@ Testa loop until — repete ate a condicao ser verdadeira
+
+module loop_until;
+
+globals
+    n: int;
+    soma: int;
+
+proc main()
+start
+    soma := 0;
+    n := 1;
+    loop
+        soma := soma + n;
+        n := n + 1;
+    until (n > 10);
+    print(soma);
+end

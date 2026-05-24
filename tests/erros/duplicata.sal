@@ -1,0 +1,13 @@
+@ Teste de erro: identificador declarado duas vezes no mesmo escopo
+@ Esperado: Erro semantico — identificador unico no escopo
+@ Saida:    programa rejeita, exit != 0
+
+module erro_duplicata;
+
+globals
+    n: int;
+    n: int;
+
+proc main()
+start
+end

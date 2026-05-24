@@ -1,0 +1,10 @@
+@ Teste de erro: instrucao ret dentro de proc (nao de fn)
+@ Esperado: Erro semantico — ret somente dentro de funcao
+@ Saida:    programa rejeita, exit != 0
+
+module erro_ret_fora_funcao;
+
+proc main()
+start
+    ret 0;
+end

@@ -1,0 +1,13 @@
+@ Teste de erro: tipo incompativel na atribuicao (bool -> int)
+@ Esperado: Erro semantico — tipo compativel na atribuicao
+@ Saida:    programa rejeita, exit != 0
+
+module erro_tipo_incompativel;
+
+globals
+    n: int;
+
+proc main()
+start
+    n := true;
+end

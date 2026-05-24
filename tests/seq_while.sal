@@ -1,0 +1,17 @@
+@ Programa: seq_while
+@ Escreve na tela os valores de 1 a 10 usando loop while
+
+module seq_while;
+
+globals
+    i: int;
+
+proc main()
+start
+    i := 1;
+    loop while (i <= 10)
+    start
+        print(i);
+        i := i + 1;
+    end;
+end

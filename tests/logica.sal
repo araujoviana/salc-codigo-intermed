@@ -1,0 +1,55 @@
+@ Programa: logica
+@ Testa operadores logicos: NOT (~), AND (^), OR (v)
+@ e tipo bool com literais true/false
+@ Instrucoes MEPA exercidas: NEGA, CONJ, DISJ
+@
+@ Sem entrada (valores embutidos: x=true, y=false)
+@ Saida esperada: 1 (NOT true = false -> else -> res=1)
+@                 0 (true AND false = false -> else -> res=0)
+@                 1 (true OR false = true -> then -> res=1)
+
+module logica;
+
+globals
+    x: bool;
+    y: bool;
+    res: int;
+
+proc main()
+start
+    x := true;
+    y := false;
+
+    @ ~x = NOT(true) = false -> desvio para else -> res := 1
+    if (~x)
+    start
+        res := 0;
+    end
+    else
+    start
+        res := 1;
+    end;
+    print(res);
+
+    @ x ^ y = true AND false = false -> desvio para else -> res := 0
+    if (x ^ y)
+    start
+        res := 1;
+    end
+    else
+    start
+        res := 0;
+    end;
+    print(res);
+
+    @ x v y = true OR false = true -> sem desvio -> res := 1
+    if (x v y)
+    start
+        res := 1;
+    end
+    else
+    start
+        res := 0;
+    end;
+    print(res);
+end
