@@ -26,9 +26,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-/* ════════════════════════════════════════════════════════════
+/* ============================================================
  *  Estado global do parser
- * ════════════════════════════════════════════════════════════ */
+ * ============================================================ */
 
 #define MAX_PARAMS  64
 #define MAX_DECL_ID 64
@@ -54,18 +54,18 @@ static TipoAtomo tipo_fn_atual   = TIPO_NENHUM;
 /* Indica se estamos dentro de uma sub-rotina (suprime geração de código) */
 static bool em_subrotina = false;
 
-/* ════════════════════════════════════════════════════════════
+/* ============================================================
  *  Protótipos antecipados
- * ════════════════════════════════════════════════════════════ */
+ * ============================================================ */
 
 static TipoAtomo   parse_expr(void);
 static void        parse_comando(void);
 static void        parse_bloco(void);
 static TInfoAtomo  next_token_log(void);  /* log léxico (--tokens) */
 
-/* ════════════════════════════════════════════════════════════
+/* ============================================================
  *  Helpers de análise léxica
- * ════════════════════════════════════════════════════════════ */
+ * ============================================================ */
 
 /* Copia rótulo gerado para buffer local (novo_rotulo usa buf estático) */
 #define SALVA_ROT(var) char var[16]; strncpy(var, novo_rotulo(), 15); var[15] = '\0'
@@ -100,9 +100,9 @@ static void verifica(Simb s, const char *esperado) {
     avanca();
 }
 
-/* ════════════════════════════════════════════════════════════
+/* ============================================================
  *  Helpers de análise semântica
- * ════════════════════════════════════════════════════════════ */
+ * ============================================================ */
 
 static const char *tipo_nome(TipoAtomo t) {
     switch (t) {
@@ -134,23 +134,23 @@ static void exige_mesmo_tipo(TipoAtomo a, TipoAtomo b,
         erro_semantico(desc, tipo_nome(b), linha);
 }
 
-static bool e_logico(TipoAtomo t) { return t == TIPO_BOOL || t == TIPO_INT; }
-static bool e_condicao(TipoAtomo t) { return t == TIPO_BOOL || t == TIPO_INT; }
+static bool e_logico(TipoAtomo t)   { return t == TIPO_BOOL || t == TIPO_INT; }
+static bool e_condicao(TipoAtomo t) { return e_logico(t); }
 
 /* Macro para emitir instrução somente fora de sub-rotinas */
 #define GERA(...) do { if (!em_subrotina) gera_instr_mepa(__VA_ARGS__); } while(0)
 
-/* ════════════════════════════════════════════════════════════
+/* ============================================================
  *  Setters públicos para flags de saída auxiliar
- * ════════════════════════════════════════════════════════════ */
+ * ============================================================ */
 
 void parse_set_arq_ts(FILE *fp) { arq_ts = fp; }
 void parse_set_arq_tk(FILE *fp) { arq_tk = fp; }
 
-/* ════════════════════════════════════════════════════════════
+/* ============================================================
  *  Log de tokens (--tokens)
  *  Mapeia cada Simb para um nome legível e registra no arq_tk.
- * ════════════════════════════════════════════════════════════ */
+ * ============================================================ */
 
 static const char *simb_nome(Simb s) {
     switch (s) {
@@ -226,9 +226,9 @@ static TInfoAtomo next_token_log(void) {
     return t;
 }
 
-/* ════════════════════════════════════════════════════════════
+/* ============================================================
  *  Parsing de tipos e declarações
- * ════════════════════════════════════════════════════════════ */
+ * ============================================================ */
 
 /* <tipo> ::= sINT | sBOOL | sCHAR [vetor ignorado na codegen] */
 static TipoAtomo parse_tipo(int *tam_out) {
@@ -319,9 +319,9 @@ static void parse_locals(void) {
     } while (tk.simb == sIDENTIF);
 }
 
-/* ════════════════════════════════════════════════════════════
+/* ============================================================
  *  Parsing de sub-rotinas (análise semântica; sem geração MEPA)
- * ════════════════════════════════════════════════════════════ */
+ * ============================================================ */
 
 typedef struct {
     char      nome[LEX_MAX];
@@ -389,11 +389,7 @@ static void parse_subrotina(bool e_funcao) {
                        nome, nome_linha);
     }
 
-    /*
-     * Escopo único para cada sub-rotina via contador incremental.
-     * Antes usávamos ts_get_escopo()+2, que produzia o mesmo escopo
-     * para múltiplas sub-rotinas (bug de colisão de parâmetros).
-     */
+    /* Escopo exclusivo para esta sub-rotina via contador global */
     int escopo_sub = prox_escopo_sub++;
     ts_set_escopo(escopo_sub);
     r->extra = escopo_sub; /* escopo dos parâmetros - usado por ts_param */
@@ -411,11 +407,7 @@ static void parse_subrotina(bool e_funcao) {
         }
         p->extra = params[i].tam;
     }
-    /*
-     * r->extra mantém o escopo (para ts_param achar os parâmetros).
-     * A contagem de parâmetros é obtida via ts_param iterativo nos pontos
-     * de chamada - evitando sobrescrever extra com param_count.
-     */
+    /* r->extra = escopo dos parâmetros; ts_param usa esse valor para buscá-los */
 
     if (aceita(sLOCALS)) {
         do { parse_dcls(); } while (tk.simb == sIDENTIF);
@@ -434,9 +426,9 @@ static void parse_subrotina(bool e_funcao) {
     em_subrotina = prev_sub;
 }
 
-/* ════════════════════════════════════════════════════════════
+/* ============================================================
  *  Parsing de expressões (com geração de código MEPA)
- * ════════════════════════════════════════════════════════════ */
+ * ============================================================ */
 
 static bool e_literal_bool(void) {
     return tk.simb == sBOOL &&
@@ -670,9 +662,9 @@ static TipoAtomo parse_expr(void) {
     return esq;
 }
 
-/* ════════════════════════════════════════════════════════════
+/* ============================================================
  *  Comandos
- * ════════════════════════════════════════════════════════════ */
+ * ============================================================ */
 
 /* print(elem, ...) */
 static void parse_print(void) {
@@ -827,8 +819,11 @@ static void parse_for(void) {
             strncpy(step_id, tk.lexema, LEX_MAX - 1);
             avanca();
         } else {
+            int step_ln = tk.linha;
             step_val = atoi(tk.lexema);
             verifica(sCTEINT, "constante inteira para step");
+            if (step_val == 0)
+                erro_semantico("passo diferente de zero", "0", step_ln);
         }
     }
 
@@ -918,9 +913,9 @@ static void parse_until(void) {
     GERA(NULL, "DSVF", L_ini, NULL);
 }
 
-/* ────────────────────────────────────────────────
+/* ------------------------------------------------
  *  match: análise e geração para when/otherwise
- * ──────────────────────────────────────────────── */
+ * ------------------------------------------------ */
 
 /* Lê um inteiro possivelmente negativo de uma cláusula when */
 static int parse_wint(void) {
@@ -1112,9 +1107,9 @@ static void parse_bloco(void) {
     verifica(sEND, "end");
 }
 
-/* ════════════════════════════════════════════════════════════
+/* ============================================================
  *  Procedimento principal (proc main)
- * ════════════════════════════════════════════════════════════ */
+ * ============================================================ */
 
 /*
  * Varre o restante do arquivo-fonte (sem consumir tokens) em busca da
@@ -1123,7 +1118,9 @@ static void parse_bloco(void) {
  * offset - correto porque o char de ungetc existe fisicamente naquele
  * offset do arquivo.
  *
- * Retorna true se "match" aparecer fora de comentários; false caso contrário.
+ * Retorna true se "match" aparecer no restante do arquivo (pula comentários de
+ * linha; comentários de bloco multilinhas podem gerar falso positivo).
+ * Falso positivo apenas desperdiça um slot de memória - não quebra a execução.
  */
 static bool fonte_tem_match(void) {
     long saved = ftell(fonte_sal);
@@ -1203,9 +1200,9 @@ static void parse_principal(int n_globais) {
     GERA(NULL, "PARA", NULL, NULL);
 }
 
-/* ════════════════════════════════════════════════════════════
+/* ============================================================
  *  Ponto de entrada: parse_ini
- * ════════════════════════════════════════════════════════════ */
+ * ============================================================ */
 
 int parse_ini(void) {
     /* Configura ponto de retorno para erros */

@@ -1,0 +1,14 @@
+@ Teste de erro: funcao declarada sem instrucao ret no corpo
+@ Esperado: Erro semantico — funcao com ret
+@ Saida:    programa rejeita, exit != 0
+
+module erro_fn_sem_ret;
+
+fn dobro(n: int): int
+start
+    print(n);
+end
+
+proc main()
+start
+end

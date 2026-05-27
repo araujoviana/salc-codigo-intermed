@@ -9,7 +9,7 @@
 #include <stdio.h>
 #include <string.h>
 
-/* ─── Estado interno (vetor fixo) ─── */
+/* --- Estado interno (vetor fixo) --- */
 static RegistroTS tabela[TS_MAX];
 static int        n_simbolos  = 0;
 static int        escopo_atual = ESCOPO_GLOBAL;
@@ -38,7 +38,7 @@ static const char *tipo_str(TipoAtomo t) {
     }
 }
 
-/* ─── Interface pública ─── */
+/* --- Interface pública --- */
 
 void ts_init(void) {
     n_simbolos   = 0;
@@ -110,8 +110,7 @@ RegistroTS *ts_buscar_local(char *lexema) {
 
 /**
  * Devolve o i-ésimo parâmetro (0-based) da sub-rotina.
- * Parâmetros são armazenados no escopo com ID = sub->extra_scope
- * (convenção: escopo da sub-rotina = ESCOPO_MAIN + 1 + índice da sub)
+ * Parâmetros têm cat == CAT_PARAMETRO e escopo == sub->extra.
  */
 const RegistroTS *ts_param(const RegistroTS *sub, int idx) {
     if (!sub) return NULL;

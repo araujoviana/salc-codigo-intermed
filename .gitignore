@@ -1,6 +1,10 @@
 *.md
 docs/
 
+# Binários compilados
+salc
+dist/
+
 # Prerequisites
 *.d
 

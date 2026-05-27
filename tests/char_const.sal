@@ -1,0 +1,20 @@
+@ Programa: char_const
+@ Testa variaveis e constantes do tipo char
+@ Exercita: CRCT com literal char, ARMZ/CRVL para variavel char,
+@           e verificacao de tipo compativel em atribuicao char := char
+@
+@ Nenhuma entrada necessaria
+@ Saida: codigo ASCII de 'A' (65)
+
+module char_const;
+
+globals
+    c: char;
+    d: char;
+
+proc main()
+start
+    c := 'A';
+    d := c;
+    print(d);
+end

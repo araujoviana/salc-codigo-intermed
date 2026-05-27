@@ -28,17 +28,17 @@
 #include <stdlib.h>
 #include <string.h>
 
-/* ─── Globais requeridos pelo léxico (analex.h usa 'extern') ─── */
+/* --- Globais requeridos pelo léxico (analex.h usa 'extern') --- */
 FILE *fonte_sal = NULL;   /* arquivo-fonte SAL aberto para leitura */
 int   linha_lex = 1;      /* contador de linhas (inicia em 1)      */
 
-/* ──────────────────────────────────────────────────────────────
+/* --------------------------------------------------------------
  * derivar_ext
  *   Copia 'entrada' para 'saida', substituindo (ou adicionando)
  *   a extensão por 'ext'.
  *   Exemplo: "tests/fib.sal" + ".mepa" → "tests/fib.mepa"
  *            "programa"      + ".ts"   → "programa.ts"
- * ────────────────────────────────────────────────────────────── */
+ * -------------------------------------------------------------- */
 static void derivar_ext(const char *entrada, char *saida, size_t n,
                         const char *ext) {
     strncpy(saida, entrada, n - 1);
@@ -57,9 +57,9 @@ static void derivar_ext(const char *entrada, char *saida, size_t n,
     strcat(saida, ext);
 }
 
-/* ──────────────────────────────────────────────────────────────
+/* --------------------------------------------------------------
  * main
- * ────────────────────────────────────────────────────────────── */
+ * -------------------------------------------------------------- */
 int main(int argc, char *argv[]) {
     if (argc < 2) {
         fprintf(stderr,
@@ -70,7 +70,7 @@ int main(int argc, char *argv[]) {
 
     const char *nome_entrada = argv[1];
 
-    /* ── Analisa flags (a partir de argv[2]) ── */
+    /* -- Analisa flags (a partir de argv[2]) -- */
     bool flag_tokens = false;
     bool flag_symtab = false;
     bool flag_trace  = false;
@@ -88,14 +88,14 @@ int main(int argc, char *argv[]) {
         }
     }
 
-    /* ── Deriva nomes dos arquivos de saída ── */
+    /* -- Deriva nomes dos arquivos de saída -- */
     char nome_mepa[4096], nome_tk[4096], nome_ts[4096], nome_trc[4096];
     derivar_ext(nome_entrada, nome_mepa, sizeof(nome_mepa), ".mepa");
     derivar_ext(nome_entrada, nome_tk,   sizeof(nome_tk),   ".tk");
     derivar_ext(nome_entrada, nome_ts,   sizeof(nome_ts),   ".ts");
     derivar_ext(nome_entrada, nome_trc,  sizeof(nome_trc),  ".trc");
 
-    /* ── Abre arquivo de entrada ── */
+    /* -- Abre arquivo de entrada -- */
     fonte_sal = fopen(nome_entrada, "r");
     if (!fonte_sal) {
         fprintf(stderr, "salc: erro ao abrir '%s' para leitura.\n",
@@ -103,7 +103,7 @@ int main(int argc, char *argv[]) {
         return EXIT_FAILURE;
     }
 
-    /* ── Abre arquivo de saída principal (.mepa) ── */
+    /* -- Abre arquivo de saída principal (.mepa) -- */
     FILE *arq_mepa = fopen(nome_mepa, "w");
     if (!arq_mepa) {
         fprintf(stderr, "salc: erro ao criar '%s'.\n", nome_mepa);
@@ -111,7 +111,7 @@ int main(int argc, char *argv[]) {
         return EXIT_FAILURE;
     }
 
-    /* ── Abre arquivos auxiliares, conforme flags ── */
+    /* -- Abre arquivos auxiliares, conforme flags -- */
     FILE *arq_tk  = NULL;
     FILE *arq_ts  = NULL;
     FILE *arq_trc = NULL;
@@ -149,16 +149,16 @@ int main(int argc, char *argv[]) {
                 nome_entrada);
     }
 
-    /* ── Configura gerador e analisador com os arquivos auxiliares ── */
+    /* -- Configura gerador e analisador com os arquivos auxiliares -- */
     gerador_init(arq_mepa);
     if (flag_trace)  gerador_set_trace(arq_trc);
     if (flag_tokens) parse_set_arq_tk(arq_tk);
     if (flag_symtab) parse_set_arq_ts(arq_ts);
 
-    /* ── Executa compilação ── */
+    /* -- Executa compilação -- */
     int resultado = parse_ini();   /* 0 = sucesso, -1 = erro */
 
-    /* ── Fecha todos os arquivos ── */
+    /* -- Fecha todos os arquivos -- */
     fclose(fonte_sal);
     fclose(arq_mepa);
     fonte_sal = NULL;
@@ -175,7 +175,7 @@ int main(int argc, char *argv[]) {
         return EXIT_FAILURE;
     }
 
-    /* ── Informa saídas geradas ── */
+    /* -- Informa saídas geradas -- */
     fprintf(stderr, "salc: %s -> %s\n", nome_entrada, nome_mepa);
     if (flag_tokens) fprintf(stderr, "salc: tokens    -> %s\n", nome_tk);
     if (flag_symtab) fprintf(stderr, "salc: tabela    -> %s\n", nome_ts);

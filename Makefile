@@ -19,10 +19,11 @@ $(OBJDIR):
 	mkdir -p $(OBJDIR)
 
 TESTS := fibonacci seq_while if_else loop_until match_test \
-         aritmetica logica relacionais for_passo match_range subrotinas
+         aritmetica logica relacionais for_passo match_range subrotinas \
+         nested_if char_const
 
 TESTES_ERRO := var_nao_declarada duplicata ret_fora_funcao \
-               args_errados tipo_incompativel
+               args_errados tipo_incompativel fn_sem_ret arg_tipo_errado
 
 test: $(TARGET)
 	@set -e; \

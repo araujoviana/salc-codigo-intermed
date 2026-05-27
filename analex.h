@@ -18,10 +18,10 @@
 #include <stdlib.h>
 #include <string.h>
 
-/* ─── Tamanho máximo do lexema ─── */
+/* --- Tamanho máximo do lexema --- */
 #define LEX_MAX 1024
 
-/* ─── Categorias de átomos (tokens) ─── */
+/* --- Categorias de átomos (tokens) --- */
 typedef enum {
     sIDENTIF = 0,
     sCTEINT,
@@ -80,21 +80,21 @@ typedef enum {
     sEOF
 } Simb;
 
-/* ─── Estrutura do átomo retornado pelo léxico ─── */
+/* --- Estrutura do átomo retornado pelo léxico --- */
 typedef struct {
     Simb  simb;
     char  lexema[LEX_MAX];
     int   linha;
 } TInfoAtomo;
 
-/* ─── Estado global do léxico (definido em main.c) ─── */
+/* --- Estado global do léxico (definido em main.c) --- */
 extern FILE *fonte_sal;   /* arquivo-fonte em leitura           */
 extern int   linha_lex;   /* contador de linhas (inicia em 1)   */
 
-/* ══════════════════════════════════════════════════════════════
+/* ==============================================================
  *  Implementação do autômato finito determinístico do léxico.
  *  Todas as funções são `static` para evitar múltiplas definições.
- * ══════════════════════════════════════════════════════════════ */
+ * ============================================================== */
 
 typedef struct { const char *texto; Simb simb; } MapReservada;
 

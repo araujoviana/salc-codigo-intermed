@@ -1,0 +1,33 @@
+@ Programa: nested_if
+@ Testa if aninhado: classifica um inteiro como negativo, zero ou positivo
+@ Instrucoes MEPA exercidas: DSVF/DSVS aninhados com rotulos independentes
+@
+@ Entrada: um inteiro n
+@ Saida:   -1 se n < 0, 0 se n = 0, 1 se n > 0
+
+module nested_if;
+
+globals
+    n: int;
+    cat: int;
+
+proc main()
+start
+    scan(n);
+    if (n < 0)
+    start
+        cat := -1;
+    end
+    else
+    start
+        if (n = 0)
+        start
+            cat := 0;
+        end
+        else
+        start
+            cat := 1;
+        end;
+    end;
+    print(cat);
+end

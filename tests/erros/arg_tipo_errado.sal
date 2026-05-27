@@ -1,0 +1,19 @@
+@ Teste de erro: argumento de tipo incompativel em chamada de funcao
+@ (bool passado onde int e esperado)
+@ Esperado: Erro semantico — tipo de argumento compativel
+@ Saida:    programa rejeita, exit != 0
+
+module erro_arg_tipo_errado;
+
+fn dobro(n: int): int
+start
+    ret n + n;
+end
+
+proc main()
+locals
+    res: int;
+start
+    res := dobro(true);
+    print(res);
+end
