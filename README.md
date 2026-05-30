@@ -79,8 +79,8 @@ Instruções MEPA geradas por construção da linguagem:
 | Relacional | `CMIG`, `CMDIF`, `CMME`, `CMMEG`, `CMMA`, `CMMAG` |
 | Desvios / rótulos | `DSVS`, `DSVF`, `NADA` |
 | `if` / `if-else` | `DSVF`, `DSVS` + 2–4 rótulos |
-| `loop while` | 4 rótulos (L_test, L_exit, L_body, L_back) |
-| `loop until` | 4 rótulos |
+| `loop while` | 4 rótulos (L_test, L_exit, L_body, L_after) |
+| `loop until` | 1 rótulo (L_ini) + DSVF de retorno |
 | `for` (step ±1) | `CMMEG`/`CMMAG` + `SOMA`/`SUBT` + 4 rótulos |
 | `match`/`when` | `ARMZ`/`CRVL` no temporário + cadeia de desvios |
 
