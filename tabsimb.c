@@ -81,14 +81,19 @@ RegistroTS *ts_inserir(char *lexema, Categoria cat, TipoAtomo tipo,
 }
 
 /**
- * Busca símbolo visível: pesquisa do escopo atual para cima
- * (ESCOPO_MAIN vê ESCOPO_GLOBAL; global vê só global).
+ * Busca símbolo visível: escopo atual e, se não encontrado, escopo global.
+ * Sub-rotinas enxergam seus próprios parâmetros/locais e as declarações
+ * globais, mas não os locais de main nem parâmetros de outras sub-rotinas.
  */
 RegistroTS *ts_buscar(char *lexema) {
-    /* Busca no escopo atual primeiro, depois no pai */
-    for (int scope = escopo_atual; scope >= ESCOPO_GLOBAL; scope--) {
+    for (int i = 0; i < n_simbolos; i++) {
+        if (tabela[i].escopo == escopo_atual &&
+            strcmp(tabela[i].lexema, lexema) == 0)
+            return &tabela[i];
+    }
+    if (escopo_atual != ESCOPO_GLOBAL) {
         for (int i = 0; i < n_simbolos; i++) {
-            if (tabela[i].escopo == scope &&
+            if (tabela[i].escopo == ESCOPO_GLOBAL &&
                 strcmp(tabela[i].lexema, lexema) == 0)
                 return &tabela[i];
         }

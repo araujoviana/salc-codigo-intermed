@@ -750,7 +750,6 @@ static void parse_atrib(void) {
 /* if ( expr ) cmd [ else cmd ] */
 static void parse_if(void) {
     SALVA_ROT(L_else);
-    SALVA_ROT(L_fim);
 
     verifica(sIF, "if");
     verifica(sABRE_PARENT, "(");
@@ -761,14 +760,16 @@ static void parse_if(void) {
 
     GERA(NULL, "DSVF", L_else, NULL);
     parse_comando();
-    GERA(NULL, "DSVS", L_fim, NULL);
-    GERA(L_else, "NADA", NULL, NULL);
 
     if (aceita(sELSE)) {
+        SALVA_ROT(L_fim);
+        GERA(NULL, "DSVS", L_fim, NULL);
+        GERA(L_else, "NADA", NULL, NULL);
         parse_comando();
+        GERA(L_fim, "NADA", NULL, NULL);
+    } else {
+        GERA(L_else, "NADA", NULL, NULL);
     }
-
-    GERA(L_fim, "NADA", NULL, NULL);
 }
 
 /* for id := e1 to e2 [step s] do cmd */
@@ -975,6 +976,11 @@ static void gera_witem(char *L_corpo, char *addr_temp) {
  * end
  */
 static void parse_match(void) {
+    if (match_temp_addr < 0) {
+        fprintf(stderr, "Erro interno [linha %d]: slot para match nao alocado\n",
+                tk.linha);
+        longjmp(jmp_erro, 1);
+    }
     char addr_temp[32];
     snprintf(addr_temp, sizeof(addr_temp), "0,%d", match_temp_addr);
 
@@ -1112,44 +1118,33 @@ static void parse_bloco(void) {
  * ============================================================ */
 
 /*
- * Varre o restante do arquivo-fonte (sem consumir tokens) em busca da
- * palavra reservada "match". Usa fseek para restaurar a posição exata do
- * lexer: fseek cancela qualquer ungetc pendente e reposiciona no mesmo
- * offset - correto porque o char de ungetc existe fisicamente naquele
- * offset do arquivo.
- *
- * Retorna true se "match" aparecer no restante do arquivo (pula comentários de
- * linha; comentários de bloco multilinhas podem gerar falso positivo).
- * Falso positivo apenas desperdiça um slot de memória - não quebra a execução.
+ * Varre o restante do arquivo-fonte buscando a palavra "match".
+ * Usa fseek para restaurar a posição do lexer após a varredura.
+ * Falso positivo (ex: "match" em comentário) apenas aloca um slot
+ * extra de memória — não causa erro de execução.
  */
 static bool fonte_tem_match(void) {
     long saved = ftell(fonte_sal);
-    if (saved < 0) return true;  /* não-seekable: assume que há match (conservador) */
+    if (saved < 0) return true;
 
-    bool found = false;
-    int  c, wlen;
     char word[8];
+    int  n = 0, c;
+    bool found = false;
 
     while (!found && (c = fgetc(fonte_sal)) != EOF) {
-        if (c == '@') {                              /* comentário de linha */
-            while ((c = fgetc(fonte_sal)) != EOF && c != '\n');
-        } else if (isalpha((unsigned char)c) || c == '_') {
-            wlen = 0;
-            word[wlen++] = (char)c;
-            while (wlen < 7) {
-                c = fgetc(fonte_sal);
-                if (c == EOF || (!isalnum((unsigned char)c) && c != '_')) {
-                    if (c != EOF) ungetc(c, fonte_sal);
-                    break;
-                }
-                word[wlen++] = (char)c;
-            }
-            word[wlen] = '\0';
+        if (isalpha((unsigned char)c) || c == '_') {
+            if (n < (int)sizeof(word) - 1) word[n++] = (char)c;
+        } else {
+            word[n] = '\0';
             if (strcmp(word, "match") == 0) found = true;
+            n = 0;
         }
     }
+    if (!found && n > 0) {
+        word[n] = '\0';
+        found = (strcmp(word, "match") == 0);
+    }
 
-    /* fseek cancela o ungetc buffer e reposiciona no offset salvo */
     fseek(fonte_sal, saved, SEEK_SET);
     return found;
 }
