@@ -445,9 +445,23 @@ static TipoAtomo parse_elem(void) {
         GERA(NULL, "CRCT", cte, NULL);
         return TIPO_INT;
     }
-    /* Constante char */
+    /* Constante char: converte para valor ASCII inteiro (ex: 'A' -> 65) */
     if (tk.simb == sCTECHAR) {
-        char cte[LEX_MAX]; strncpy(cte, tk.lexema, LEX_MAX - 1);
+        const char *lex = tk.lexema; /* formato: 'X' ou '\n' */
+        int ascii;
+        if (lex[1] == '\\') {
+            switch (lex[2]) {
+            case 'n':  ascii = '\n'; break;
+            case 't':  ascii = '\t'; break;
+            case '\\': ascii = '\\'; break;
+            case '\'': ascii = '\''; break;
+            case '0':  ascii =  0;   break;
+            default:   ascii = (unsigned char)lex[2]; break;
+            }
+        } else {
+            ascii = (unsigned char)lex[1];
+        }
+        char cte[16]; snprintf(cte, sizeof(cte), "%d", ascii);
         avanca();
         GERA(NULL, "CRCT", cte, NULL);
         return TIPO_CHAR;
@@ -619,12 +633,12 @@ static TipoAtomo parse_exrel(void) {
 
         /* Emite instrução MEPA de comparação */
         switch (op) {
-        case sIGUAL:    GERA(NULL, "CMIG",  NULL, NULL); break;
-        case sDIFERENTE:GERA(NULL, "CMDIF", NULL, NULL); break;
-        case sMAIOR:    GERA(NULL, "CMMA",  NULL, NULL); break;
-        case sMAIORIG:  GERA(NULL, "CMMAG", NULL, NULL); break;
-        case sMENOR:    GERA(NULL, "CMME",  NULL, NULL); break;
-        case sMENORIG:  GERA(NULL, "CMMEG", NULL, NULL); break;
+        case sIGUAL:    GERA(NULL, "CMIG", NULL, NULL); break;
+        case sDIFERENTE:GERA(NULL, "CMDG", NULL, NULL); break;
+        case sMAIOR:    GERA(NULL, "CMMA", NULL, NULL); break;
+        case sMAIORIG:  GERA(NULL, "CMAG", NULL, NULL); break;
+        case sMENOR:    GERA(NULL, "CMME", NULL, NULL); break;
+        case sMENORIG:  GERA(NULL, "CMEG", NULL, NULL); break;
         default: break;
         }
         esq = TIPO_BOOL;
@@ -829,7 +843,7 @@ static void parse_for(void) {
     }
 
     /* Comparação: <= (passo positivo) ou >= (passo negativo) */
-    GERA(NULL, step_neg ? "CMMAG" : "CMMEG", NULL, NULL);
+    GERA(NULL, step_neg ? "CMAG" : "CMEG", NULL, NULL);
     GERA(NULL, "DSVF", L_exit, NULL);
     GERA(NULL, "DSVS", L_body, NULL);
 
@@ -946,11 +960,11 @@ static void gera_witem(char *L_corpo, char *addr_temp) {
 
         GERA(NULL, "CRVL", addr_temp, NULL);
         GERA(NULL, "CRCT", sv1, NULL);
-        GERA(NULL, "CMMAG", NULL, NULL);  /* temp >= v1? */
-        GERA(NULL, "DSVF", L_skip, NULL); /* não → pula */
+        GERA(NULL, "CMAG", NULL, NULL);   /* temp >= v1? */
+        GERA(NULL, "DSVF", L_skip, NULL); /* nao -> pula */
         GERA(NULL, "CRVL", addr_temp, NULL);
         GERA(NULL, "CRCT", sv2, NULL);
-        GERA(NULL, "CMMEG", NULL, NULL);  /* temp <= v2? */
+        GERA(NULL, "CMEG", NULL, NULL);   /* temp <= v2? */
         GERA(NULL, "DSVF", L_skip, NULL); /* não → pula */
         GERA(NULL, "DSVS", L_corpo, NULL);
         GERA(L_skip, "NADA", NULL, NULL);

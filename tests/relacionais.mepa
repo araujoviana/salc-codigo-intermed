@@ -19,7 +19,7 @@ L2:  NADA
      IMPR
      CRVL 0,0
      CRVL 0,1
-     CMDIF
+     CMDG
      DSVF L3
      CRCT 1
      ARMZ 0,2
@@ -45,7 +45,7 @@ L6:  NADA
      IMPR
      CRVL 0,0
      CRVL 0,1
-     CMMEG
+     CMEG
      DSVF L7
      CRCT 1
      ARMZ 0,2
@@ -71,7 +71,7 @@ L10: NADA
      IMPR
      CRVL 0,0
      CRVL 0,1
-     CMMAG
+     CMAG
      DSVF L11
      CRCT 1
      ARMZ 0,2

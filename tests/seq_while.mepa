@@ -5,7 +5,7 @@
 L1:  NADA
      CRVL 0,0
      CRCT 10
-     CMMEG
+     CMEG
      DSVF L2
      DSVS L3
 L4:  NADA
