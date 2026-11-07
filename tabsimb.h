@@ -1,6 +1,6 @@
 /*
- * Matheus Gabriel Viana Araujo - 10420444
- * Luis Fernando de Mesquita Pereira - 10410686
+ * Matheus Gabriel Viana Araujo
+ * Luis Fernando de Mesquita Pereira
  *
  * tabsimb.h - Tabela de Símbolos para o compilador SALc
  *

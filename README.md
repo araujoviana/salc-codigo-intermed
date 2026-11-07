@@ -1,7 +1,7 @@
 # SALc - Geração de Código Intermediário
 
-Matheus Gabriel Viana Araujo - 10420444
-Luis Fernando de Mesquita Pereira - 10410686
+Matheus Gabriel Viana Araujo
+Luis Fernando de Mesquita Pereira
 
 Compilador da linguagem SAL que realiza análise léxica,
 sintática e semântica completas e gera código intermediário em MEPA

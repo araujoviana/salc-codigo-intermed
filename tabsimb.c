@@ -1,6 +1,6 @@
 /*
- * Matheus Gabriel Viana Araujo - 10420444
- * Luis Fernando de Mesquita Pereira - 10410686
+ * Matheus Gabriel Viana Araujo
+ * Luis Fernando de Mesquita Pereira
  *
  * tabsimb.c - Implementação da Tabela de Símbolos
  */
